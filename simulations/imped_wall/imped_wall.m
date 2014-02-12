@@ -21,17 +21,47 @@
 clear all;
 close all;
 
-Z = -5+j;
-Y = 1/Z;
+prefix = 'Z5pj_';
 
+% geometry
 L = 10; % y length
+
+% freq-related
 f = 440;
 w = 2*pi*f;
 c = 343;
 
 k = w/c;
 
-N = 10;
+% boundary condition
+Z = 5+j;
+Y = 1/Z;
 
-psi_n = @(n,y) cos(n*pi/L*y);
+% ky finding
+N = 10;
+n_vect = 1:N;
+
+alphan2 = pi/L*n_vect;
+
+
+ky_vect = sqrt(diag(j*k*L*Y*eye(N) + diag(alphan2)));
+
+% plotting
+y = 0:0.01:1;
+for n=n_vect
+    ky = ky_vect(n);
+	if ky > k
+		mode_type = '[propagatif]';
+	else
+		mode_type = '[evanescent]';
+	end
+
+	close all;
+
+    plot(cos(ky*y), y);
+	title(['n=' num2str(n) ' ' mode_type]);
+	grid on;
+	ylabel('y');
+    print('-dpng', [prefix 'imped_n' num2str(n) '.png']);
+end
 

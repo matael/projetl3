@@ -24,17 +24,18 @@ close all;
 prefix = 'Z5pj_';
 
 % geometry
-L = 10; % y length
+L = 1; % y length
 
 % freq-related
 f = 440;
 w = 2*pi*f;
 c = 343;
 
-k = w/c;
+% k = w/c;
+k = 10;
 
 % boundary condition
-Z = 5+j;
+Z = j;
 Y = 1/Z;
 
 % ky finding
@@ -42,7 +43,6 @@ N = 10;
 n_vect = 1:N;
 
 alphan2 = pi/L*n_vect;
-
 
 ky_vect = sqrt(diag(j*k*L*Y*eye(N) + diag(alphan2)));
 

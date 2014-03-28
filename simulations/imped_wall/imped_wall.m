@@ -39,7 +39,7 @@ Z = j;
 Y = 1/Z;
 
 % ky finding
-N = 10;
+N = 30;
 n_vect = 1:N;
 
 alphan2 = pi/L*n_vect;

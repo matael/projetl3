@@ -1,12 +1,13 @@
-% vim:ft=tex:
-%
 \documentclass[11pt]{article}
-\usepackage[french]{babel}
+% \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
 \usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[top=3cm,right=2cm,bottom=2cm,left=2cm]{geometry}
 
 \renewcommand{\phi}\varphi
+\newcommand{\J}{\mathrm{J}}
 
 \title{Modes dans un guide cyclindrique}
 \author{C. Laurent \& M. Gaborit}
@@ -18,6 +19,7 @@
 On cherche à définir les modes dans un guide d'onde cylindrique.
 
 \begin{figure}
+    \centering
 \begin{tikzpicture}[>=latex,scale=0.6]
     % cercle
     \draw (0,0) circle (5);
@@ -52,6 +54,12 @@ On se place en coordonnées cylindriques (voir figure~\ref{cyl1:fig}, donc sur u
 \Delta p  + k^2p = 0 \label{cyl1:helm}
 \end{equation}
 
+Avec la condition limite suivante :
+
+\begin{equation}
+    \left.\frac{\partial p}{\partial n}\right|_{r=R} = 0\label{cyl1:CL1}
+\end{equation}
+
 \paragraph{Laplacien} En coordonnées cyclindriques :
 
 $$\Delta \bullet = \frac{1}{r}\frac{\partial}{\partial r}\left[r\frac{\partial\bullet}{\partial r}\right] +
@@ -59,7 +67,9 @@ $$\Delta \bullet = \frac{1}{r}\frac{\partial}{\partial r}\left[r\frac{\partial\b
 
 En coordonnées cylindriques, on a $p(t,r,\theta,z)$. On choisira de séparer les variables :
 
-$$p(t,r,\theta,z) = \psi(r)\phi(\theta)e^{j(\omega t+k^{(z)}z)}$$
+\begin{equation}
+    p(t,r,\theta,z) = \psi(r)\phi(\theta)e^{j(\omega t+k^{(z)}z)} \label{cyl1:eq_p}
+\end{equation}
 
 On réécrit donc~\eqref{cyl1:helm} :
 
@@ -92,9 +102,70 @@ avoir une même valeur ainsi, nous avons la condition de recollement suivante :
 \begin{cases}
     \phi(-\pi) = \phi(\pi)&\\
     \frac{\partial\phi(-\pi)}{\partial \theta} = \frac{\partial\phi(\pi)}{\partial \theta}&
-\end{cases}\label{}
+\end{cases}\label{cyl1:CL2}
 \end{equation}
 
+Ainsi, en reprenant le terme de droite de~\eqref{cyl1:sepvar}, on retrouve :
 
+\begin{equation}
+    \frac{\partial^2\phi}{\partial\theta^2} = - \mu\phi \Rightarrow \phi(\theta) = A\cos(\theta\sqrt{\mu}) +
+    B\sin[\theta\sqrt{\mu}] \label{cyl1:eq_phi}
+\end{equation}
+
+En appliquant la condition limite~\eqref{cyl1:CL2}, on obtient :
+
+\begin{equation}
+    \begin{array}{rrcl}
+        &\phi(-\pi) & = & \phi(\pi)\\
+        \Leftrightarrow & A\cos(-\pi\sqrt{\mu}) + B\sin(-\pi\sqrt{\mu}) & = & A\cos(\pi\sqrt{\mu}) + B\sin(\pi\sqrt{\mu}) \\
+        \Leftrightarrow & 2B\sin(\pi\sqrt{\mu}) & = & 0\\
+        \Leftrightarrow & \sin(\pi\sqrt{\mu}) & = & 0\\
+        \Leftrightarrow & \pi\sqrt{\mu} & = & n\pi ~~;~~ n\in\mathbb{N}\\
+        \Leftrightarrow & \sqrt{\mu} & \equiv & n
+    \end{array}        
+\end{equation}
+
+On s'occupe maintenant de la deuxième partie de l'équation~\eqref{cyl1:sepvar}.
+
+\begin{equation}
+    \frac{r}{\psi}\left[r\frac{\partial^2\psi}{\partial r^2}+\frac{\partial\psi}{\partial r}\right] + k^2r^2 =
+    \sqrt{\mu} = n^2 \Leftrightarrow r^2\frac{\partial^2\psi}{\partial r^2} + r\frac{\partial\psi}{\partial r} +
+    (r^2k^2-n^2)\psi = 0 \label{cyl1:eq_psi}
+\end{equation}
+
+\paragraph{Condition de non-divergence} On admet que :
+
+\begin{equation}
+    \lim_{r\to 0} \psi_n(r) < \infty \label{cyl1:CL3}
+\end{equation}
+
+Les solutions de l'équation ~\eqref{cyl1:eq_psi} sont donc de la forme :
+
+\begin{equation}
+    \psi_{n,m}(r) = A_{n,m}\J_n(\alpha_{n,m}r) + \underbrace{B_{n,m}\mathrm{K}_n(\alpha{n,m}r)}_{\eqref{cyl1:CL3}
+        \Rightarrow B_{n,m}
+    = 0} \label{cyl1:eq_psi2}
+\end{equation}
+
+On pose par ailleurs : $$k_{n,m}^{(r)} = (\alpha_{n,m})^2$$ ; les $\alpha_{n,m}$ correspondent aux zéros des fonctions
+de bessel $\J_n$ de première espèce et d'ordre $n$.
+
+\paragraph{Solution particulière}
+
+On recombine les équations~\eqref{cyl1:eq_p},~\eqref{cyl1:eq_phi} et ~\eqref{cyl1:eq_psi2} :
+
+\begin{equation}
+    p_{n,m}(r,\theta,t) = \J_n(\alpha_{n,m})\left[a_{n,m}\cos(n\theta)+b_{n,m}\sin(n\theta)\right]e^{j(\omega t - k_{n,m}^{(z)}z)} \label{cyl1:pnm}
+\end{equation}
+
+On notera d'ailleurs que $$k_{n,m}^{(z)}\sqrt{k^2-(\alpha_{n,m})^2}$$
+
+\paragraph{Solution Générale} En sommant ~\eqref{cyl1:pnm} sur $n$ et $m$, on obtient la solution générale suivante.
+
+\begin{equation}
+    p(r,\theta,t) = \sum_{n=0}^\infty\sum_{m=0}^\infty
+    \J_n(\alpha_{n,m})\left[a_{n,m}\cos(n\theta)+b_{n,m}\sin(n\theta)\right]e^{j(\omega t - k_{n,m}^{(z)}z)}
+    \label{cyl1:ptot}
+\end{equation}
 \end{document}
 

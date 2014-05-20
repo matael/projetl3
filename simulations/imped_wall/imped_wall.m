@@ -21,7 +21,7 @@
 clear all;
 close all;
 
-prefix = 'Z5pj_';
+prefix = 'Zmj_';
 
 % geometry
 L = 1; % y length
@@ -35,7 +35,7 @@ c = 343;
 k = 10;
 
 % boundary condition
-Z = j;
+Z = -j;
 Y = 1/Z;
 
 % ky finding
@@ -44,7 +44,7 @@ n_vect = 1:N;
 
 alphan2 = pi/L*n_vect;
 
-ky_vect = sqrt(diag(j*k*L*Y*eye(N) + diag(alphan2)));
+ky_vect = sqrt(diag(j*k*L*Y*ones(N) + diag(alphan2)));
 
 % plotting
 y = 0:0.01:1;

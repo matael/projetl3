@@ -1,0 +1,100 @@
+% vim:ft=tex:
+%
+\documentclass[11pt]{article}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{amsmath}
+
+\renewcommand{\phi}\varphi
+
+\title{Modes dans un guide cyclindrique}
+\author{C. Laurent \& M. Gaborit}
+\date{Projet L3}
+
+\begin{document}
+\maketitle
+
+On cherche à définir les modes dans un guide d'onde cylindrique.
+
+\begin{figure}
+\begin{tikzpicture}[>=latex,scale=0.6]
+    % cercle
+    \draw (0,0) circle (5);
+
+    % axes
+    \draw (-6,0) -- (6,0);
+    \draw (0,-6) -- (0,6);
+    \draw (0,0) circle (0.4);
+    \draw[fill=black] (0,0) circle (0.1);
+
+
+    % vecteur
+    \draw[->] (0,0) -- (30:4) node[midway,left,above] {$r$};
+    \draw (2,0) arc (0:30:2);
+    \draw (15:2) node[right] {$\theta$};
+    \draw[fill=black](30:4) circle (.1) node[right] {$M$};
+
+    % Rayon
+    \draw (0,0) -- (40:-6) node[midway,below,right] {$R$};
+\end{tikzpicture}
+\caption{\label{cyl1:fig} Coupe du guide}
+\end{figure}
+
+\subsection*{Position du problème}
+
+On se place en coordonnées cylindriques (voir figure~\ref{cyl1:fig}, donc sur un domaine $D =
+\{\forall(r,\theta)\in[0,1]\times[-\pi;\pi]\}$), en régime harmonique.
+
+\paragraph{Equation de propagation} Ainsi, on cherchera à résoudre l'équation dite d'Helmholtz~\eqref{cyl1:helm} :
+
+\begin{equation}
+\Delta p  + k^2p = 0 \label{cyl1:helm}
+\end{equation}
+
+\paragraph{Laplacien} En coordonnées cyclindriques :
+
+$$\Delta \bullet = \frac{1}{r}\frac{\partial}{\partial r}\left[r\frac{\partial\bullet}{\partial r}\right] +
+\frac{1}{r^2}\frac{\partial^2\bullet}{\partial\theta^2}+\frac{\partial^2\bullet}{\partial z^2}$$
+
+En coordonnées cylindriques, on a $p(t,r,\theta,z)$. On choisira de séparer les variables :
+
+$$p(t,r,\theta,z) = \psi(r)\phi(\theta)e^{j(\omega t+k^{(z)}z)}$$
+
+On réécrit donc~\eqref{cyl1:helm} :
+
+\begin{equation*}
+\begin{array}{c}
+\frac{1}{r}\frac{\partial}{\partial r}\left[r\frac{\partial\psi}{\partial r}\right]\phi +
+\frac{1}{r^2}\frac{\partial^2\phi}{\partial\theta^2}\psi+k^2\psi\phi = 0\\
+%
+\frac{1}{r\psi}\frac{\partial}{\partial r}\left[r\frac{\partial\psi}{\partial r}\right] +
+\frac{1}{\phi r^2}\frac{\partial^2\phi}{\partial\theta^2}+k^2 = 0\\
+%
+\frac{1}{r\psi}\left[r\frac{\partial^2\psi}{\partial r^2}+\frac{\partial\psi}{\partial r}\right] +
+\frac{1}{\phi r^2}\frac{\partial^2\phi}{\partial\theta^2}+k^2 = 0\\
+%
+\frac{r}{\psi}\left[r\frac{\partial^2\psi}{\partial r^2}+\frac{\partial\psi}{\partial r}\right] + k^2r^2 +
+\frac{1}{\phi}\frac{\partial^2\phi}{\partial\theta^2} = 0\\
+\end{array}
+\end{equation*}
+
+On a alors :
+\begin{equation}
+-\left\{\frac{r}{\psi}\left[r\frac{\partial^2\psi}{\partial r^2}+\frac{\partial\psi}{\partial r}\right] + k^2r^2\right\} =
+\frac{1}{\phi}\frac{\partial^2\phi}{\partial\theta^2} = -\mu ~~;~~ \mu < 0\label{cyl1:sepvar}\\
+\end{equation}
+
+\paragraph{Condition de recollement} En $\theta=\pm\pi$ (aux limites du domaine d'étude) la fonction $\phi(\theta)$ doit
+avoir une même valeur ainsi, nous avons la condition de recollement suivante :
+
+\begin{equation}
+\begin{cases}
+    \phi(-\pi) = \phi(\pi)&\\
+    \frac{\partial\phi(-\pi)}{\partial \theta} = \frac{\partial\phi(\pi)}{\partial \theta}&
+\end{cases}\label{}
+\end{equation}
+
+
+\end{document}
+
